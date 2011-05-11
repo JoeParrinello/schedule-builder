@@ -34,7 +34,7 @@ $incomplete_data = 0;
 if ( $conn ) {
 	$res = $conn->query(<<<_
 		SELECT semester, disp_name, UNIX_TIMESTAMP(last_updated), UNIX_TIMESTAMP(last_run), updating, incomplete
-		  FROM N_TERMINFO
+		  FROM TERMINFO
 		 WHERE active = 1
 _
 	);
