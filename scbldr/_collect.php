@@ -456,12 +456,12 @@ function subjectTaughtAt($subject) {
 
 function courseExists($subject, $nr, $var) {
 	global $conn;
-	$query = "SELECT courseid FROM Course WHERE subject = '$subject' AND coursenr = '$nr' AND coursevar = '$var'";
+	$query = "SELECT courseid FROM COURSE WHERE subject = '$subject' AND coursenr = '$nr' AND coursevar = '$var'";
 	$res = $conn->query($query);
 	return $res && $res->num_rows == 1;
 }
 function getCourseID($subject, $nr, $var, $conn) {
-	$query = "SELECT crs_id FROM N_COURSE WHERE subject='$subject' AND number='$nr' AND suffix='$var'";
+	$query = "SELECT crs_id FROM COURSE WHERE subject='$subject' AND number='$nr' AND suffix='$var'";
 	$res = $conn->query($query);
 	if (!$res)
 		return false;
@@ -781,7 +781,7 @@ $last_update;
 function onshutdown() {
 	global $last_update;
 	include "./dbconnect.php";
-	$conn->query("UPDATE N_TERMINFO SET	last_run = NOW(), last_updated = '$last_update', updating = 0, incomplete = 0 WHERE active = 1");
+	$conn->query("UPDATE TERMINFO SET	last_run = NOW(), last_updated = '$last_update', updating = FALSE, incomplete = FALSE WHERE active = TRUE");
 }
 
 try {
@@ -793,7 +793,7 @@ try {
 	$date = new DateTime($matches[1]);
 	$last_update = date_format($date, "Y-m-d H:i:s");
 	
-	$res = $conn->query("SELECT semester, disp_name, updating, last_updated, incomplete FROM N_TERMINFO WHERE active = 1");
+	$res = $conn->query("SELECT semester, disp_name, updating, last_updated FROM TERMINFO WHERE active = TRUE");
 	if (!$res) {
 		die("No active term found");
 	}
@@ -815,7 +815,7 @@ try {
 		if (DISABLE_CATALOG_SCRAPING)
 			echo " (section information only)";
 		echo "..$lineEnd$lineEnd";
-		$conn->query("UPDATE N_TERMINFO SET updating = 1, incomplete = 1 WHERE active = 1");
+		$conn->query("UPDATE TERMINFO SET updating = TRUE, incomplete = TRUE WHERE active = TRUE");
 		if (SCRAPE_COURSES) {
 			$conn->query("TRUNCATE TABLE COURSE");
 		}

@@ -404,7 +404,7 @@ var changeCount = 0;
 			requestData(pps.join(";/"))
 				.done(function(data) {
 					console.log("Data loaded after %.3fs", (new Date().getTime() - t0) * 1.0e-3);
-					if (!data.length) {
+					if (!data.hasOwnProperty("length")) {
 						console.log("Query time %.3fs, n=%d", data.t,data.n);
 						data = data.data;
 					}

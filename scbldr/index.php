@@ -148,9 +148,9 @@ Your browser is not supported... time to upgrade.
 	<div id="header">
 		<nav>
 			<a id="infolink" href="#">info</a>
-			&ensp;|&ensp;
+			&nbsp;|&nbsp;
 			<a href="https://code.google.com/p/schedule-builder/issues/list" target="_blank">issues</a>
-			&ensp;|&ensp;
+			&nbsp;|&nbsp;
 			<a href="http://code.google.com/p/schedule-builder/" target="_blank">source code</a>
 		</nav>
 		<!--
