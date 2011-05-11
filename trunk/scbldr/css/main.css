@@ -213,7 +213,7 @@ hr { border-top: 1px #966 dotted; border-bottom:none; border-left:none; border-r
 
 
 
-div.thumbs-container { margin: 0 0 0 auto; }
+div.thumbs-container { margin: 0 2px 0 auto; }
 .thumbs-nav { font-size:1.2em;position:absolute;top:-1000px;padding:3px; border-collapse: collapse; }
 .thumbs-nav:hover { opacity: 1; filter:alpha(opacity:100); }
 .thumbs-nav table { border:0;background-color: rgb(246,246,246); }
