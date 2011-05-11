@@ -148,9 +148,10 @@ Your browser is not supported... time to upgrade.
 	<div id="header">
 		<nav>
 			<a id="infolink" href="#">info</a>
-			<a href="#">links</a>
-			|
-			<a href="https://github.com/edwinchoi/scbldr" target="_blank">source</a>
+			&ensp;|&ensp;
+			<a href="https://code.google.com/p/schedule-builder/issues/list" target="_blank">issues</a>
+			&ensp;|&ensp;
+			<a href="http://code.google.com/p/schedule-builder/" target="_blank">source code</a>
 		</nav>
 		<!--
 		<div style="float:right;text-align:right;padding-right:8px;">
