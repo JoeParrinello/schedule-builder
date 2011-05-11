@@ -5,11 +5,10 @@
  * The database model.
  */
 
-------------------------------------------------------------------------------
---
--- used to specify the current term and indicate some basic info about the
--- most recent data collection.
---
+/*
+used to specify the current term and indicate some basic info about the
+most recent data collection.
+*/
 CREATE TABLE IF NOT EXISTS TERMINFO(
 	semester CHAR(5) PRIMARY KEY,
 	disp_name VARCHAR(15),
@@ -17,14 +16,14 @@ CREATE TABLE IF NOT EXISTS TERMINFO(
 	last_run TIMESTAMP DEFAULT 0,
 	updating BOOL,
 	active BOOL,
+	incomplete BOOL,
 	failed_courses INT DEFAULT -1,
 	failed_sections INT DEFAULT -1
 ) engine=MyISAM;
 
-------------------------------------------------------------------------------
---
--- the course name (i.e., CS490) is <courseid><coursenr><coursevar>
---
+/*
+the course name (i.e., CS490) is <courseid><coursenr><coursevar>
+*/
 CREATE TABLE IF NOT EXISTS COURSE(
 	crs_id INT PRIMARY KEY auto_increment,
 	subject CHAR(4) NOT NULL, /*REFERENCES SUBJECT(abbr),*/
@@ -37,12 +36,11 @@ CREATE TABLE IF NOT EXISTS COURSE(
 	INDEX(subject, number, suffix)
 ) engine=MyISAM;
 
------------------------------------------------------------------------------
---
--- first 4 letters of term is the year, the last two is one of WN, SP, SU, FL
---
--- ideally, instructor would reference a userid in the User table
---
+/*
+first 4 letters of term is the year, the last two is one of WN, SP, SU, FL
+
+ideally, instructor would reference a userid in the User table
+*/
 CREATE TABLE IF NOT EXISTS SECTION(
 	callnr MEDIUMINT UNSIGNED PRIMARY KEY,
 	crs_id SMALLINT UNSIGNED REFERENCES N_COURSE(crs_id),
@@ -58,10 +56,6 @@ CREATE TABLE IF NOT EXISTS SECTION(
 	comments VARCHAR(150)
 ) engine=MyISAM;
 
------------------------------------------------------------------------------
---
--- 
---
 CREATE TABLE IF NOT EXISTS TIMESLOT(
 	callnr MEDIUMINT UNSIGNED REFERENCES SECTION(callnr),
 	day TINYINT,
@@ -72,12 +66,11 @@ CREATE TABLE IF NOT EXISTS TIMESLOT(
 	INDEX(callnr)
 ) engine=MyISAM;
 
----------------------------------------------------
---
--- denormalized table... eliminating the join (COURSE |x| SECTION) to speed up queries
--- also combines the attributes: subject, number, suffix
---
-CREATE TABLE NX_COURSE(
+/*
+denormalized table... eliminating the join (COURSE |x| SECTION) to speed up queries
+also combines the attributes: subject, number, suffix
+*/
+CREATE TABLE IF NOT EXISTS NX_COURSE(
 	callnr MEDIUMINT UNSIGNED PRIMARY KEY,
 
 	crs_id SMALLINT UNSIGNED REFERENCES COURSE(crs_id),
