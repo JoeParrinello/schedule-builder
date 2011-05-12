@@ -108,31 +108,33 @@ function ucfirst(s) {
  */
 function eventPublisher(obj) {
 	var listeners = {};
-	obj.addEventListener = function(name, callback, ignored) {
-		if (!listeners[name])
-			listeners[name] = [];
-		var cbs = listeners[name];
-		if (cbs.indexOf(callback) == -1) {
-			cbs.push(callback);
+	$.extend(obj, {
+		addEventListener: function addEventListener(name, callback, ignored) {
+			if (!listeners[name])
+				listeners[name] = [];
+			var cbs = listeners[name];
+			if (cbs.indexOf(callback) == -1) {
+				cbs.push(callback);
+			}
+		},
+		removeEventListener: function removeEventListener(name, callback, ignored) {
+			if (!listeners[name])
+				return;
+			var cbs = listeners[name];
+			if (cbs.indexOf(callback) != -1) {
+				cbs.splice(cbs.indexOf(callback), 1);
+			}
+		},
+		dispatchEvent: function dispatchEvent(evt) {
+			if (!listeners[evt.type])
+				return;
+			var cbs = listeners[evt.type];
+			for (var i = 0; i < cbs.length; i++) {
+				if (cbs[i].call(this, evt) === false)
+					return false;
+			}
 		}
-	};
-	obj.removeEventListener = function(name, callback, ignored) {
-		if (!listeners[name])
-			return;
-		var cbs = listeners[name];
-		if (cbs.indexOf(callback) != -1) {
-			cbs.splice(cbs.indexOf(callback), 1);
-		}
-	};
-	obj.dispatchEvent = function(evt) {
-		if (!listeners[evt.type])
-			return;
-		var cbs = listeners[evt.type];
-		for (var i = 0; i < cbs.length; i++) {
-			if (cbs[i].call(this, evt) === false)
-				return false;
-		}
-	};
+	});
 	return obj;
 }
 
@@ -931,9 +933,7 @@ function ImagePanel(target) {
 			return;
 		if (!$.contains(self.thumbs, e.target)) {
 			var me = arguments.callee;
-			setTimeout(function() {
-				self.thumbs.slideUp("fast");
-			}, 150);
+			self.thumbs.delay(150).slideUp("fast");
 		}
 	}
 	$(document).bind("keydown", keydown);
@@ -1155,14 +1155,12 @@ function showImagePanel(V, C) {
 				return;
 			if (!$.contains(thumbs[0], e.target)) {
 				var me = arguments.callee;
-				setTimeout(function() {
-					view.slideUp("fast", function() {
-						$("#progress")[0].innerHTML = "";
-						thumbs.remove();
-						$(document).unbind("keydown", me);
-						$(window).unbind("mousedown", me);
-					});
-				}, 150);
+				view.delay(150).slideUp("fast", function() {
+					$("#progress")[0].innerHTML = "";
+					thumbs.remove();
+					$(document).unbind("keydown", me);
+					$(window).unbind("mousedown", me);
+				});
 			}
 		}
 		$(document).bind("keydown", keydown);
@@ -1522,9 +1520,7 @@ var CourseList = {
 					C = [];
 					while (configs.length)
 						C.push.apply(C, configs.shift());
-					setTimeout(function() {
-						finderEvents.trigger("complete", [{V:p[0],C:C,k:p[2]}]);
-					}, 200);
+					finderEvents.delay(200).trigger("complete", [{V:p[0],C:C,k:p[2]}]);
 				}).fail(function(error) {
 					console.error(error);
 				});
@@ -1589,9 +1585,7 @@ var CourseList = {
 })();
 
 scheduleEvents.one("loadComplete", function() {
-	setTimeout(function() {
-		$("#loadingBox").remove();
-	}, 500);
+	$("#loadingBox").delay(500).remove();
 });
 
 function updateTooltip(tt, crs) {

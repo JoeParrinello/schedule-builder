@@ -11,6 +11,9 @@
 //ini_set("display_errors", 1);
 //ini_set("display_startup_errors", 1);
 
+date_default_timezone_set("GMT");
+$timezone = date_default_timezone_get();
+
 if ( !isset($_GET['p'])) {
 	header("HTTP/1.1 400 Bad Request");
 	header("Status: Bad Request");
@@ -35,8 +38,8 @@ $headers = getallheaders();
 if (isset($headers["If-Modified-Since"])) {
 	$lastmodcheck = strtotime($headers["If-Modified-Since"]);
 	if ($lastmodcheck >= $last_run_timestamp) {
-//		header("HTTP/1.0 304 Not Modified");
-//		exit;
+		header("HTTP/1.0 304 Not Modified");
+		exit;
 	}
 }
 
@@ -247,12 +250,11 @@ unset($ctable);
 unset($map);
 
 if (!defined("INTERNAL")) {
-	ob_start("ob_gzhandler");
-	header("Content-Type: text/javascript");
+	header("Content-Type: application/x-javascript");
 	header("Cache-Control: no-cache, private, must-revalidate");
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s", $last_run_timestamp). " GMT");
 	
-    if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+	if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
         echo "var COURSE_DATA = ";
     }
 //	echo json_encode(array("data" => &$data, "t" => microtime(true) - $t_start, "n" => $num_sects));
