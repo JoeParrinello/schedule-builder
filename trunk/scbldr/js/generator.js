@@ -247,7 +247,7 @@ function Solver(p) {
 			/** @protected */
 			findAll = function(reportInterval) {
 				var C = [];
-				reportInterval = reportInterval || 140;
+				reportInterval = reportInterval || 80;
 
 				if (reportInterval && typeof window === "undefined") {
 					var t0 = new Date().getTime();
@@ -340,7 +340,7 @@ function Solver(p) {
 				var d = new $.Deferred();
 				var t0 = new Date().getTime();
 				
-				reportInterval = reportInterval || 140;
+				reportInterval = reportInterval || 80;
 				stack = [];
 				stack.push([-1, $mkr(0, V.length), $zeroes()]);
 				
@@ -406,6 +406,7 @@ function timeConflicts(s1, s2) {
 			}
 		}
 	}
+	return false;
 }
 
 function removeDups(cands) {
