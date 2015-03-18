@@ -24,8 +24,8 @@ class Flags {
 	const CANCELLED = 8;
 };
 
-define("TERM", "fall");
-define("SOURCE_URL", "http://www.njit.edu/registrar/schedules/courses/fall/");
+define("TERM", "summer");
+define("SOURCE_URL", "http://www.njit.edu/registrar/schedules/courses/summer/");
 define("SCRAPE_COURSES", true);
 
 define("CLEAR_COURSES", false);
@@ -782,7 +782,11 @@ function dumpCourseInfo() {
 	$ins_sect_stmt->reset();
 	$ins_slot_stmt->reset();
 
-	$conn->close();
+    //Wasn't letting the collect happen elsewhere.
+    global $last_update;
+    $conn->query("UPDATE TERMINFO SET	last_run = NOW(), last_updated = '$last_update', updating = FALSE, incomplete = FALSE WHERE active = TRUE");
+
+    $conn->close();
 }
 
 $last_update;
