@@ -1,2 +1,6 @@
+This is a modification of Edwin Choi's Schedule Builder. Originally hosted on Google Code, migrated to Github.
+
+Fixing a few bugs, and will eventually be moving the backend to use a different source for class information.
+
 See INSTALL for instructions on installing.
 See LICENSE for license information.
