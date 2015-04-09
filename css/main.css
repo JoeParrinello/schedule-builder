@@ -283,5 +283,5 @@ ul#scheduleList a:hover { cursor: pointer; }
 
 .dijitMenuPopup { margin-left: 5px; }
 
-.dijitAccordionText a.close { font-style: italic; color: #999; float:right; position:relative; margin-top:-1px; }
-.dijitAccordionText a:hover.close { cursor: pointer; color: #333; }
+.dijitAccordionText a.remove { font-style: italic; color: #999; float:right; position:relative; margin-top:-1px; }
+.dijitAccordionText a:hover.remove { cursor: pointer; color: #333; }
