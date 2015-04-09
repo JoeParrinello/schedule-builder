@@ -751,7 +751,7 @@ scheduleEvents
 			id: data.course,
 			title: "<span class='course-name'>" + data.course + "</span> " +
 				   "(<span class='course-credits'>" + data.credits.toFixed(2) + "</span>)" +
-				   "<a class='close'>close</a><br/>" +
+				   "<a class='remove'>remove</a><br/>" +
 				   "<span class='course-title'>" + data.title + "</span>",
 			content: tblcont[0],
 			iconClass: "course-color-" + (cont.getChildren().length + 1) + " ",
